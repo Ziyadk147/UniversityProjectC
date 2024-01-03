@@ -6,12 +6,15 @@
 //making student structure
 typedef struct{
 	char *name;
-	int roll_no;
-	int marks[5];
+    float totalMarksOfSubject;
+    float *marks;
+    int roll_no;
+    int noOfSubjects;
 } Student;
 
-//int calculateObtainedMarks(int marks[]);
-//float calculatePercentage(float obtainedMarks, float totalMarks, float totalSubjects);
+int  calculateTotalMarks(int array[]);
+float calculatePercentage(float obtainedMarks , float totalMarksEach ,float noOfSubjects);
+
 void addStudent(Student *student);
 void printStudent(Student student);
 void freeMemory(Student *student);

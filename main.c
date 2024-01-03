@@ -20,7 +20,8 @@ int main(int argc, char *argv[]) {
 				printStudent(newStudent);
 				addStudentToFile(fileptr , newStudent);
 				freeMemory(&newStudent);
-				break;
+
+                break;
 			}
 
 			case 2:
