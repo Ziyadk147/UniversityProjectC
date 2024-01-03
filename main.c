@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
 	int exitChoice,menuChoice;
 	FILE *fileptr;
 	fileptr = openOrCreateFile("newDatabase.txt");
-	
+
 	do{
 		system("cls");
 		printf("\t\t\tStudent Management System\nEnter Your Selection\n1\tAdd New student\n2\tView A Student\n3\tEdit A Student\n4\tDelete A Student\n5\tExit\n");
@@ -17,10 +17,11 @@ int main(int argc, char *argv[]) {
 			case 1:{
 				Student newStudent;
 				addStudent(&newStudent);
-				printStudent(newStudent);
-				addStudentToFile(fileptr , newStudent);
-				freeMemory(&newStudent);
-				break;
+                setRollNo(fileptr , &newStudent);
+                addStudentToFile(fileptr , newStudent);
+                printStudent(newStudent);
+                freeMemory(&newStudent);
+                break;
 			}
 
 			case 2:
@@ -43,7 +44,7 @@ int main(int argc, char *argv[]) {
 		scanf("%d",&exitChoice);
 		system("cls");
 	}while(exitChoice == 1);
-	
+
 }
 	
                          

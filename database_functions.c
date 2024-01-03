@@ -1,27 +1,41 @@
 #include "database_functions.h"
 #include<stdio.h>
+#include<conio.h>
 #include "functions.h"
 
 FILE *openOrCreateFile(char *filename){
 	
 	FILE *fileptr = fopen(filename , "a+");
-	if(fileptr == NULL){
+
+    if(fileptr == NULL){
 		printf("\nFile Could not be opened\n");
 		exit(1);
 	}
-	return fileptr;
+
+    return fileptr;
 	
 	
 }
-void addStudentToFile(FILE *fileptr, Student student){
-	
-	fprintf(fileptr , "%s,",student.name);
+int getTotalLines(FILE *fileptr){
+    char tempLine[256];
+    int count = 0;
+    while(fgets(tempLine , sizeof (tempLine) , fileptr )!= NULL){ //keeps reading the lines until the file reaches the end
+        count++;
+    }
+    return count;
+}
 
-	for(int i = 0;i < 5;i++){
-		fprintf(fileptr , "%d,",student.marks[i]);
+void addStudentToFile(FILE *fileptr, Student student){
+
+
+	fprintf(fileptr , "{roll_no:%d,name:%s",student.roll_no,student.name);
+
+	for(int i = 0;i < student.noOfSubjects ;i++){
+		fprintf(fileptr , ",subject_%d:%.2f",i + 1,student.marks[i]);
 	}
 
-	fprintf(fileptr , "\n");
+	fprintf(fileptr , "}\n");
 	fclose(fileptr);
-	
+
+
 }
