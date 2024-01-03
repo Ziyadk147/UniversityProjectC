@@ -17,11 +17,10 @@ int main(int argc, char *argv[]) {
 			case 1:{
 				Student newStudent;
 				addStudent(&newStudent);
-				printStudent(newStudent);
                 setRollNo(fileptr , &newStudent);
                 addStudentToFile(fileptr , newStudent);
-				freeMemory(&newStudent);
-
+                printStudent(newStudent);
+                freeMemory(&newStudent);
                 break;
 			}
 

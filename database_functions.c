@@ -28,13 +28,13 @@ int getTotalLines(FILE *fileptr){
 void addStudentToFile(FILE *fileptr, Student student){
 
 
-	fprintf(fileptr , "%d,%s,",student.roll_no,student.name);
+	fprintf(fileptr , "{roll_no:%d,name:%s",student.roll_no,student.name);
 
 	for(int i = 0;i < student.noOfSubjects ;i++){
-		fprintf(fileptr , "%.2f,",student.marks[i]);
+		fprintf(fileptr , ",subject_%d:%.2f",i + 1,student.marks[i]);
 	}
 
-	fprintf(fileptr , "\n");
+	fprintf(fileptr , "}\n");
 	fclose(fileptr);
 
 

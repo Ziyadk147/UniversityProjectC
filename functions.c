@@ -24,16 +24,21 @@ void addStudent(Student *student){
 void setRollNo(FILE *fileptr , Student *student){
 
     int currentLine = getTotalLines(fileptr);
+
     student->roll_no = currentLine + 1;
 
 }
 
 void printStudent(Student student){
-	printf("\nName of Student is %s\n" , student.name);
-	for(int i = 0 ; i < student.noOfSubjects; i++){
-		printf("Marks of Subject %d are %f\n" , i + 1, student.marks[i]);
-	}
-//	printf("Roll number of student is %d" , student.roll_no);
+	printf("Roll number of student is %d" , student.roll_no);
+
+    printf("\nName of Student is %s\n" , student.name);
+
+    for(int i = 0 ; i < student.noOfSubjects; i++){
+
+        printf("Marks of Subject %d are %.2f\n" , i + 1, student.marks[i]);
+
+    }
 }
 
 void freeMemory(Student *student){
