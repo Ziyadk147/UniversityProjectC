@@ -29,8 +29,16 @@ int inputNoOfSubjects(Student *student){
     return student->noOfSubjects;
 };
 
+int inputTotalMarksofSubject(Student *student){
 
-void inputMarks(Student *student, size_t marksBuffer , int noOfSubjects){
+    printf("\nEnter the total marks of the subjects:");
+    scanf("%f" ,&student->totalMarksOfEachSubject);
+
+    return student->totalMarksOfEachSubject;
+}
+
+void inputMarks(Student *student, size_t marksBuffer ){
+    float temp = 0;
     student->marks = malloc(marksBuffer);
     if(student->marks == NULL){
         printf("\nMEMORY ALLOCATION FAILED..EXITING\n");
@@ -39,8 +47,31 @@ void inputMarks(Student *student, size_t marksBuffer , int noOfSubjects){
     else{
         for (int i = 0; i < student->noOfSubjects; i++) {
             printf("Enter marks of Subject %d\n" , i + 1);
-            scanf("%f" , &student->marks[i]);
+            scanf("%f" , &temp);
+
+            if(temp > student->totalMarksOfEachSubject){
+                printf("\nMarks input invalid....EXITING..\n");
+                exit(1);
+            }
+            else{
+                student->marks[i] = temp;
+            }
         }
     }
 }
+float inputObtainedMarks(Student *student){
 
+    float sum = 0;
+    for (int i = 0; i < student->noOfSubjects;i++) {
+        sum += student->marks[i];
+    }
+    student->obtainedMarks = sum;
+
+    return sum;
+}
+int inputTotalMarksOfAllSubjects(Student *student){
+
+    student->combinedTotalMarks = student->noOfSubjects * student->totalMarksOfEachSubject;
+    return student->combinedTotalMarks;
+
+}
