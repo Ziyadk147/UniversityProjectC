@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
 	int exitChoice,menuChoice;
 	FILE *fileptr;
 	fileptr = openOrCreateFile("newDatabase.txt");
-	
+
 	do{
 		system("cls");
 		printf("\t\t\tStudent Management System\nEnter Your Selection\n1\tAdd New student\n2\tView A Student\n3\tEdit A Student\n4\tDelete A Student\n5\tExit\n");
@@ -18,7 +18,8 @@ int main(int argc, char *argv[]) {
 				Student newStudent;
 				addStudent(&newStudent);
 				printStudent(newStudent);
-				addStudentToFile(fileptr , newStudent);
+                setRollNo(fileptr , &newStudent);
+                addStudentToFile(fileptr , newStudent);
 				freeMemory(&newStudent);
 
                 break;
@@ -44,7 +45,7 @@ int main(int argc, char *argv[]) {
 		scanf("%d",&exitChoice);
 		system("cls");
 	}while(exitChoice == 1);
-	
+
 }
 	
                          

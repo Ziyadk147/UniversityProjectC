@@ -1,5 +1,6 @@
 #include "database_functions.h"
 #include<stdio.h>
+#include<conio.h>
 #include "functions.h"
 
 FILE *openOrCreateFile(char *filename){
@@ -15,9 +16,19 @@ FILE *openOrCreateFile(char *filename){
 	
 	
 }
+int getTotalLines(FILE *fileptr){
+    char tempLine[256];
+    int count = 0;
+    while(fgets(tempLine , sizeof (tempLine) , fileptr )!= NULL){ //keeps reading the lines until the file reaches the end
+        count++;
+    }
+    return count;
+}
+
 void addStudentToFile(FILE *fileptr, Student student){
-	
-	fprintf(fileptr , "%s,",student.name);
+
+
+	fprintf(fileptr , "%d,%s,",student.roll_no,student.name);
 
 	for(int i = 0;i < student.noOfSubjects ;i++){
 		fprintf(fileptr , "%.2f,",student.marks[i]);
@@ -25,5 +36,6 @@ void addStudentToFile(FILE *fileptr, Student student){
 
 	fprintf(fileptr , "\n");
 	fclose(fileptr);
-	
+
+
 }

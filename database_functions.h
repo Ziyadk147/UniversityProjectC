@@ -6,4 +6,16 @@ FILE *openOrCreateFile(char *filename);//filename is a pointer to string or char
 
 void addStudentToFile(FILE *fileptr , Student student);
 
+int getTotalLines(FILE *fileptr);
+
+
+
+/*
+ * read the previous lines
+ * check the previous id number and add one
+ * in case of no previous id number then just store 1 as id
+ * store the data with the new id number
+ */
+
+
 #endif

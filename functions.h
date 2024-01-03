@@ -15,7 +15,9 @@ typedef struct{
 int  calculateTotalMarks(int array[]);
 float calculatePercentage(float obtainedMarks , float totalMarksEach ,float noOfSubjects);
 
+
 void addStudent(Student *student);
+void setRollNo(FILE *fileptr , Student *student);
 void printStudent(Student student);
 void freeMemory(Student *student);
 #endif

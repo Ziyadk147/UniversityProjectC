@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include "functions.h"
 #include "sub-functions.h"
+#include "database_functions.h"
 
 
 void addStudent(Student *student){
@@ -17,6 +18,13 @@ void addStudent(Student *student){
 
     inputMarks(student ,marksBuffer ,noOfSubjects);
 
+
+}
+
+void setRollNo(FILE *fileptr , Student *student){
+
+    int currentLine = getTotalLines(fileptr);
+    student->roll_no = currentLine + 1;
 
 }
 
