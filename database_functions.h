@@ -6,6 +6,8 @@ FILE *openOrCreateFile(char *filename);//filename is a pointer to string or char
 
 void addStudentToFile(FILE *fileptr , Student student);
 
+char *readSpecificLineFromFile(FILE *fileptr, int lineNumber,size_t charbuffer);
+
 int getTotalLines(FILE *fileptr);
 
 

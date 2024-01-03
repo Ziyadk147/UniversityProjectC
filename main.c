@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "functions.h"
 #include "database_functions.h"
+#include <cJSON.h> //https://github.com/DaveGamble/cJSON
+
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main(int argc, char *argv[]) {
@@ -25,7 +27,8 @@ int main(int argc, char *argv[]) {
 			}
 
 			case 2:
-				//
+                viewStudent(fileptr);
+
 				break;
 			case 3:
 				//

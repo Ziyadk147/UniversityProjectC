@@ -1,6 +1,7 @@
 #include "database_functions.h"
 #include<stdio.h>
 #include<conio.h>
+#include<string.h>
 #include "functions.h"
 
 FILE *openOrCreateFile(char *filename){
@@ -17,13 +18,14 @@ FILE *openOrCreateFile(char *filename){
 	
 }
 int getTotalLines(FILE *fileptr){
-    char tempLine[256];
+    char tempLine[1000];
     int count = 0;
     while(fgets(tempLine , sizeof (tempLine) , fileptr )!= NULL){ //keeps reading the lines until the file reaches the end
         count++;
     }
     return count;
 }
+
 
 void addStudentToFile(FILE *fileptr, Student student){
 
@@ -39,4 +41,19 @@ void addStudentToFile(FILE *fileptr, Student student){
 	fclose(fileptr);
 
 
+}
+char *readSpecificLineFromFile(FILE *fileptr , int lineNumber , size_t charBuffer){
+    char *tempLine , *jsonLine;
+
+
+    tempLine = malloc(charBuffer);
+
+
+    int count = 1;
+    while(fgets(tempLine ,charBuffer ,fileptr) != NULL){
+        if(count == lineNumber){
+
+          return tempLine;
+        }
+    };
 }

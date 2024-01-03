@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<stddef.h>
 #include<stdlib.h>
+#include "cJSON.h" //https://github.com/DaveGamble/cJSON
 
 void inputName(Student *student, size_t nameBuffer){
     printf("\nEnter Student's Name: ");
@@ -63,7 +64,9 @@ float inputObtainedMarks(Student *student){
 
     float sum = 0;
     for (int i = 0; i < student->noOfSubjects;i++) {
+
         sum += student->marks[i];
+
     }
     student->obtainedMarks = sum;
 
@@ -81,4 +84,25 @@ float inputPercentage(Student *student){
     student->percentage = (student->obtainedMarks/student->combinedTotalMarks) * 100;
 
     return student->percentage;
+}
+
+
+int getStudentId(){
+    int userId;
+
+    printf("\t\t\tView Student\nEnter the ID of the student you want to view\n");
+
+    scanf("%d" , &userId);
+
+    return userId;
+}
+
+
+void convertJsonToArray(char *jsonString){
+
+    cJSON *json = cJSON_Parse(jsonString);
+    cJSON *roll_no = cJSON_GetObjectItemCaseSensitive(json,"roll_no");
+    printf("the roll no is %s" , roll_no->valuestring);
+
+
 }

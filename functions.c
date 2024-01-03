@@ -3,7 +3,7 @@
 #include "functions.h"
 #include "sub-functions.h"
 #include "database_functions.h"
-
+#include "cJSON.h"
 
 void addStudent(Student *student){
 
@@ -54,3 +54,18 @@ void freeMemory(Student *student){
     free(student->marks);
 }
 
+
+void viewStudent(FILE *fileptr){
+    int studentId;
+    char *temp;
+    size_t charBuffer = 256;
+    studentId = getStudentId();
+
+    temp = readSpecificLineFromFile(fileptr , studentId , charBuffer);
+    convertJsonToArray( &temp);
+
+
+    free(temp);
+
+
+}
