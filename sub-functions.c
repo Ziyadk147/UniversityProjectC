@@ -72,6 +72,13 @@ float inputObtainedMarks(Student *student){
 int inputTotalMarksOfAllSubjects(Student *student){
 
     student->combinedTotalMarks = student->noOfSubjects * student->totalMarksOfEachSubject;
+
     return student->combinedTotalMarks;
 
+}
+float inputPercentage(Student *student){
+
+    student->percentage = (student->obtainedMarks/student->combinedTotalMarks) * 100;
+
+    return student->percentage;
 }

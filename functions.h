@@ -9,9 +9,11 @@ typedef struct{
     float totalMarksOfEachSubject;
     float *marks;
     float obtainedMarks;
+    float percentage;
     int roll_no;
     int noOfSubjects;
     int combinedTotalMarks;
+
 
 } Student;
 

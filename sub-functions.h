@@ -12,6 +12,6 @@ int inputNoOfSubjects(Student *student);
 int inputTotalMarksofSubject(Student *student);
 int inputTotalMarksOfAllSubjects(Student *student);
 float  inputObtainedMarks(Student *student);
-float calculatePercentage(float obtainedMarks , float totalMarksEach ,float noOfSubjects);
+float inputPercentage(Student *student);
 
 #endif //C_SUB_FUNCTIONS_H
