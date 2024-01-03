@@ -33,6 +33,7 @@ void addStudentToFile(FILE *fileptr, Student student){
 	for(int i = 0;i < student.noOfSubjects ;i++){
 		fprintf(fileptr , ",subject_%d:%.2f",i + 1,student.marks[i]);
 	}
+    fprintf(fileptr , ",obtained_marks:%.2f,total_marks:%d,percentage:%.2f%%",student.obtainedMarks,student.combinedTotalMarks,student.percentage);
 
 	fprintf(fileptr , "}\n");
 	fclose(fileptr);
