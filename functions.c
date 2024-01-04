@@ -4,7 +4,6 @@
 #include "sub-functions.h"
 #include "database_functions.h"
 
-
 void addStudent(Student *student){
 
     size_t nameBuffer = 50 ,marksBuffer = sizeof(float);
@@ -44,7 +43,7 @@ void printStudent(Student student){
         printf("Marks of Subject %d are %.2f\n" , i + 1, student.marks[i]);
 
     }
-    printf("Student no %d has earned total of %.2f marks out of %d \npercentage is %.2f%" , student.roll_no,student.obtainedMarks , student.combinedTotalMarks,student.percentage);
+    printf("Student no %d has earned total of %.2f marks out of %d \npercentage is %.2f%%" , student.roll_no,student.obtainedMarks , student.combinedTotalMarks,student.percentage);
 
 }
 
@@ -54,3 +53,23 @@ void freeMemory(Student *student){
     free(student->marks);
 }
 
+
+void viewStudent(FILE *fileptr){
+    int studentId;
+    char *temp;
+
+    size_t charBuffer = 256;
+
+    studentId = getStudentId();
+
+    temp = readSpecificLineFromFile(fileptr , studentId , charBuffer);
+
+    cJSON *json_obj = parseJSONObject( temp);
+
+    cJSON ***itemsArray = getObjectItemsFromJSON(json_obj);
+    printObject(itemsArray);
+
+
+
+
+}

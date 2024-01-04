@@ -17,9 +17,12 @@ typedef struct{
 
 } Student;
 
-
+//addstudent
 void addStudent(Student *student);
 void setRollNo(FILE *fileptr , Student *student);
 void printStudent(Student student);
 void freeMemory(Student *student);
+
+//viewstudent
+void viewStudent();
 #endif
