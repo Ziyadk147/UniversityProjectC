@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]) {
 	int exitChoice,menuChoice;
 	FILE *fileptr;
-	fileptr = openOrCreateFile("newDatabase.txt");
+	fileptr = openOrCreateFileForWriting("newDatabase.txt");
 
 	do{
 		system("cls");
@@ -23,11 +23,14 @@ int main(int argc, char *argv[]) {
                 addStudentToFile(fileptr , newStudent);
                 printStudent(newStudent);
                 freeMemory(&newStudent);
+                closeFile(fileptr);
                 break;
 			}
 
 			case 2:
+                fileptr = openFileForReading("newDatabase.txt");
                 viewStudent(fileptr);
+                closeFile(fileptr);
 
 				break;
 			case 3:

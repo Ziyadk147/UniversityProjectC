@@ -98,11 +98,82 @@ int getStudentId(){
 }
 
 
-void convertJsonToArray(char *jsonString){
 
-    cJSON *json = cJSON_Parse(jsonString);
-    cJSON *roll_no = cJSON_GetObjectItemCaseSensitive(json,"roll_no");
-    printf("the roll no is %s" , roll_no->valuestring);
+cJSON *parseJSONObject(char *jsonString){
 
+    cJSON *json_obj = cJSON_Parse(jsonString);
 
+    if(json_obj == NULL || !cJSON_IsObject(json_obj)){
+        printf("Error Parsing JSON Object");
+        exit(1);
+    }
+    return json_obj;
 }
+
+cJSON ***getObjectItemsFromJSON(cJSON *json){
+/*
+ * the first star means a pointer to an array of pointers this is the whole array itself
+ * second stars means a pointer to a pointer these are the elements of the outer array
+ * third star is the pointer to a JSON object which are the elements of the inner array
+ */
+    cJSON ***items;
+
+    items = malloc(sizeof (cJSON**) * 3);
+
+    for (int i = 0; i < 3; i++) {
+
+        items[i] = malloc(sizeof (cJSON*) * 3);
+
+    }
+
+    items[0][0] = cJSON_GetObjectItem(json , "roll_no");
+    items[0][1] = cJSON_GetObjectItem(json , "name");
+    items[0][2] = cJSON_GetObjectItem(json , "no_of_subjects");
+
+
+    items[2][0] = cJSON_GetObjectItem(json,"obtained_marks");
+    items[2][1] = cJSON_GetObjectItem(json,"total_marks");
+    items[2][2] = cJSON_GetObjectItem(json,"percentage");
+
+    int no_of_subjects = items[0][2]->valueint;
+
+    char tempString[no_of_subjects];
+
+    items[1] = malloc(sizeof (cJSON*) * no_of_subjects);
+
+    for (int i = 0; i < no_of_subjects; i++) {
+
+        sprintf(tempString , "subject_%d" , i + 1);
+
+        items[1][i] = cJSON_GetObjectItem(json , tempString);
+
+    }
+
+    return items;
+}
+cJSON printObject(cJSON ***items){
+
+
+    char *name = items[0][1]->valuestring;
+    int rollNo = items[0][0]->valueint;
+    int noOfSubjects = items[0][2]->valueint;
+    int totalMarks = items[2][1]->valueint;
+    double obtainedMarks = items[2][0]->valuedouble;
+    double percentage = items[2][2]->valuedouble;
+    double marks[noOfSubjects];
+
+    for (int i = 0; i < noOfSubjects; i++) {
+        marks[i] = items[1][i]->valuedouble;
+    }
+
+    printf("Roll number of student is %d\nName of Student is %s\n" , rollNo,name);
+
+    for(int i = 0 ; i < noOfSubjects; i++){
+
+        printf("Marks of Subject %d are %.2lf\n" , i + 1, marks[i]);
+
+    }
+    printf("Student no %d has earned total of %.2f marks out of %d \npercentage is %.2f%%" ,  rollNo, obtainedMarks ,  totalMarks, percentage);
+
+};
+

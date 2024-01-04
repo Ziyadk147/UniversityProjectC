@@ -3,6 +3,7 @@
 #include<stddef.h>
 #include<stdlib.h>
 #include "functions.h"
+#include "cJSON.h"
 #define C_SUB_FUNCTIONS_H
 
 void inputName(Student *student, size_t nameBuffer);
@@ -16,5 +17,9 @@ int getStudentId();
 float  inputObtainedMarks(Student *student);
 float inputPercentage(Student *student);
 
-void convertJsonToArray(char *jsonString);
+cJSON *parseJSONObject(char *jsonString);
+cJSON ***getObjectItemsFromJSON(cJSON *json_obj);
+
+cJSON printObject(cJSON ***items);
+
 #endif //C_SUB_FUNCTIONS_H
