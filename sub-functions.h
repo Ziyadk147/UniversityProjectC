@@ -19,8 +19,11 @@ float  inputObtainedMarks(Student *student);
 float inputPercentage(Student *student);
 
 cJSON *parseJSONObject(char *jsonString);
-cJSON ***getObjectItemsFromJSON(cJSON *json_obj);
 
 cJSON printObject(cJSON ***items);
+
+char modifyJSONStringObject(cJSON *json_obj , char *keyName , char *string );
+char modifyJSONNumberObject(cJSON *json_obj , char *keyName ,int number );
+char modifyJSONFloatObject(cJSON *json_obj , char *keyName ,double number );
 
 #endif //C_SUB_FUNCTIONS_H
