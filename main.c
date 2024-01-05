@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
                 setRollNo(fileptr , &newStudent);
                 addStudentToFile(fileptr , newStudent);
                 closeFile(fileptr);
-                printStudent(newStudent);
+                printStudent(newStudent.roll_no,newStudent.name,newStudent.noOfSubjects,newStudent.marks,newStudent.obtainedMarks,newStudent.combinedTotalMarks,newStudent.percentage);
                 freeMemory(&newStudent);
                 break;
 			}
@@ -32,7 +32,6 @@ int main(int argc, char *argv[]) {
                 fileptr = openFileForReading("newDatabase.txt");
                 viewStudent(fileptr);
                 closeFile(fileptr);
-
 				break;
 			case 3:
 				//

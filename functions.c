@@ -35,15 +35,15 @@ void setRollNo(FILE *fileptr , Student *student){
 
 }
 
-void printStudent(Student student){
-	printf("Roll number of student is %d\nName of Student is %s\n" , student.roll_no,student.name);
+void printStudent(int rollNo , char *name , int noOfSubjects , float *marks ,float obtainedMarks ,int combinedTotalMarks,float percentage){
+	printf("Roll number of student is %d\nName of Student is %s\n" , rollNo,name);
 
-    for(int i = 0 ; i < student.noOfSubjects; i++){
+    for(int i = 0 ; i < noOfSubjects; i++){
 
-        printf("Marks of Subject %d are %.2f\n" , i + 1, student.marks[i]);
+        printf("Marks of Subject %d are %.2f\n" , i + 1, marks[i]);
 
     }
-    printf("Student no %d has earned total of %.2f marks out of %d \npercentage is %.2f%%" , student.roll_no,student.obtainedMarks , student.combinedTotalMarks,student.percentage);
+    printf("Student no %d has earned total of %.2f marks out of %d \npercentage is %.2f%%" , rollNo,obtainedMarks , combinedTotalMarks,percentage);
 
 }
 
@@ -67,9 +67,5 @@ void viewStudent(FILE *fileptr){
     cJSON *json_obj = parseJSONObject( temp);
 
     cJSON ***itemsArray = getObjectItemsFromJSON(json_obj);
-    printObject(itemsArray);
-
-
-
 
 }
