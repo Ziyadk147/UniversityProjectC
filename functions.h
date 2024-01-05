@@ -20,7 +20,7 @@ typedef struct{
 //addstudent
 void addStudent(Student *student);
 void setRollNo(FILE *fileptr , Student *student);
-void printStudent(Student student);
+void printStudent(int rollNo , char *name , int noOfSubjects , float *marks ,float obtainedMarks ,int combinedTotalMarks,float percentage);
 void freeMemory(Student *student);
 
 //viewstudent

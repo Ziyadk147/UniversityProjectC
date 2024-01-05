@@ -8,6 +8,7 @@
 
 void inputName(Student *student, size_t nameBuffer);
 void inputMarks(Student *student, size_t marksBuffer );
+void freeObjectMemory(cJSON ***items);
 
 int inputNoOfSubjects(Student *student);
 int inputTotalMarksofSubject(Student *student);

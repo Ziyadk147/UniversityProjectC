@@ -158,22 +158,17 @@ cJSON printObject(cJSON ***items){
     int rollNo = items[0][0]->valueint;
     int noOfSubjects = items[0][2]->valueint;
     int totalMarks = items[2][1]->valueint;
-    double obtainedMarks = items[2][0]->valuedouble;
-    double percentage = items[2][2]->valuedouble;
-    double marks[noOfSubjects];
+    float obtainedMarks = items[2][0]->valuedouble;
+    float percentage = items[2][2]->valuedouble;
+    float marks[noOfSubjects];
 
     for (int i = 0; i < noOfSubjects; i++) {
         marks[i] = items[1][i]->valuedouble;
     }
 
-    printf("Roll number of student is %d\nName of Student is %s\n" , rollNo,name);
-
-    for(int i = 0 ; i < noOfSubjects; i++){
-
-        printf("Marks of Subject %d are %.2lf\n" , i + 1, marks[i]);
-
-    }
-    printf("Student no %d has earned total of %.2f marks out of %d \npercentage is %.2f%%" ,  rollNo, obtainedMarks ,  totalMarks, percentage);
-
+    printStudent(rollNo,name,noOfSubjects,marks,obtainedMarks,totalMarks,percentage);
+    free(items);
 };
 
+
+//TODO:://free the allocated memory in the sub functions
