@@ -34,14 +34,19 @@ int main(int argc, char *argv[]) {
                 cJSON *json_obj = getStudentFromDatabase(fileptr);
                 cJSON ***itemsArray = getObjectItemsFromJSON(json_obj);
                 printObject(itemsArray);
+//                freeItems(itemsArray,itemsArray[0][1]->valueint);
                 closeFile(fileptr);
-				break;
+                cJSON_Delete(json_obj); // Free cJSON object after using it
+
+                break;
 			case 3:
 				fileptr = openOrCreateFileForWriting(database);
                 cJSON *json = getStudentFromDatabase(fileptr);
                 cJSON ***items = getObjectItemsFromJSON(json);
-                editMenu(items , json);
+                editMenu(fileptr , items , json);
                 closeFile(fileptr);
+                cJSON_Delete(json_obj); // Free cJSON object after using it
+
                 break;
 			case 4:
 				//

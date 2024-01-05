@@ -23,13 +23,13 @@ void addStudent(Student *student);
 void setRollNo(FILE *fileptr , Student *student);
 void printStudent(int rollNo , char *name , int noOfSubjects , float *marks ,float obtainedMarks ,int combinedTotalMarks,float percentage);
 void freeMemory(Student *student);
+void freeItems(cJSON ***items , int noOfSubjects);
 
-//viewstudent
 cJSON * getStudentFromDatabase(FILE *fileptr);
 cJSON ***getObjectItemsFromJSON(cJSON *json_obj);
 cJSON printObject(cJSON ***items);
 
 
 
-int editMenu(cJSON ***items , cJSON *json_obj);
+int editMenu(FILE *fileptr,cJSON ***items , cJSON *json_obj);
 #endif

@@ -3,6 +3,7 @@
 #include<conio.h>
 #include<string.h>
 #include "functions.h"
+#include "cJSON.h"
 
 FILE *openOrCreateFileForWriting(char *filename){
 	
@@ -60,7 +61,7 @@ void addStudentToFile(FILE *fileptr, Student student){
 }
 char *readSpecificLineFromFile(FILE *fileptr , int lineNumber , size_t charBuffer){
 
-    char *tempLine , *jsonLine;
+    char *tempLine ;
 
 
     tempLine = malloc(charBuffer);
@@ -73,5 +74,33 @@ char *readSpecificLineFromFile(FILE *fileptr , int lineNumber , size_t charBuffe
         }
         count++;
     };
+    free(tempLine);
     fclose(fileptr);
 }
+void addJSONToFile(FILE *fileptr ,int lineNumber, char *jsonString){
+
+    char *templine;
+    int count = 1;
+    templine = (char * )malloc(sizeof (char) * 256);
+    FILE *tempfile = openOrCreateFileForWriting("tempfile.txt");
+
+    while(fgets(templine , 1024 , fileptr) != NULL){
+        if(count != lineNumber){
+            fprintf(tempfile , "%s\n" , templine);
+        }
+        else{
+            fprintf(tempfile , jsonString);
+        }
+
+        count++;
+    };
+    fclose(tempfile);
+    fclose(fileptr);
+
+
+}
+
+
+
+
+

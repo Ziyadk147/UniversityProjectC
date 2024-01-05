@@ -3,12 +3,12 @@
 #include<stddef.h>
 #include<stdlib.h>
 #include "cJSON.h" //https://github.com/DaveGamble/cJSON
+#include <string.h>
 
 
-
-char *inputName(size_t nameBuffer){
+char *inputName(){
     char *name;
-
+    size_t nameBuffer = 50 * sizeof (char);
     name = (char*)malloc(nameBuffer);
 
     if(name == NULL){
@@ -20,14 +20,14 @@ char *inputName(size_t nameBuffer){
 
     return name;
 }
-void setName(Student *student , char *name , size_t nameBuffer){
-
+void setName(Student *student , char *name){
+    size_t nameBuffer = 50 * sizeof (char);
     student->name = malloc(nameBuffer);
     if(student->name == NULL){
         printf("MEMORY ALLOCATION FAILED\n");
         exit(1);
     }
-    student->name = name;
+    strcpy(student->name , name);
 
 }
 
@@ -55,10 +55,10 @@ void setTotalMarksOfEachSubject(Student *student ,float totalMarksOfEachSubject 
     student->totalMarksOfEachSubject = totalMarksOfEachSubject;
 
 }
-float *inputMarks(int noOfSubjects , size_t marksBuffer ,float totalMarksOfEachSubject){
-
+float *inputMarks(int noOfSubjects  ,float totalMarksOfEachSubject){
+    size_t  marksBuffer = sizeof(float) *  noOfSubjects;
+//BUFFER is set to the size of float times the total subjects,so that enough memory will be allocated
     float *marks , temp = 0;
-
     marks =  malloc(marksBuffer);
 
     for (int i = 0; i < noOfSubjects ; i++) {
@@ -78,9 +78,11 @@ float *inputMarks(int noOfSubjects , size_t marksBuffer ,float totalMarksOfEachS
     return  marks;
 
 }
-void setMarks(Student *student , float *marks , int noOfSubjects , size_t numberBuffer){
+void setMarks(Student *student , float *marks , int noOfSubjects ){
 
-    student->marks = (float * ) malloc(numberBuffer);
+    size_t  marksBuffer = sizeof(float) *  noOfSubjects;
+
+    student->marks = (float * ) malloc(marksBuffer);
 
     for (int i = 0; i < noOfSubjects;i++) {
 
@@ -150,16 +152,16 @@ cJSON *parseJSONObject(char *jsonString){
     return json_obj;
 }
 
-char modifyJSONStringObject(cJSON *json_obj , char *keyName , char *string ){
-    cJSON_ReplaceItemInObjectCaseSensitive(json_obj , keyName , cJSON_CreateString(string));
-    char *json_str = cJSON_Print(json_obj);
-    return *json_str;
+char *modifyJSONStringObject(cJSON *json_obj , char *keyName , char *name ){
+    cJSON_ReplaceItemInObjectCaseSensitive(json_obj , keyName , cJSON_CreateString(name));
+    char *json_str = cJSON_PrintUnformatted(json_obj);
+    return json_str;
 }
 
-char modifyJSONNumberObject(cJSON *json_obj , char *keyName ,int number ){
+char *modifyJSONNumberObject(cJSON *json_obj , char *keyName ,int number ){
     cJSON_ReplaceItemInObjectCaseSensitive(json_obj , keyName , cJSON_CreateNumber(number));
     char *json_str = cJSON_Print(json_obj);
-    return *json_str;
+    return json_str;
 }
 //char modifyJSONFloatObject(cJSON *json_obj , char *keyName ,double number ){
 //    cJSON_ReplaceItemInObjectCaseSensitive(json_obj , keyName , cJSON_create(number));

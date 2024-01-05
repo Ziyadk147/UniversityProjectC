@@ -6,17 +6,14 @@
 
 void addStudent(Student *student){
 
-    size_t nameBuffer = 50 * sizeof (char), marksBuffer = sizeof(float);
+
     char *name;
     float totalMarksOfEachSubject = 0,obtainedMarks = 0 ,percentage,*marks;
     int noOfSubjects = 0,combinedTotalMarks;
 
+    name = inputName();
 
-    marksBuffer *= noOfSubjects; //BUFFER is set to the size of float times the total subjects,so that enough memory will be allocated
-
-    name = inputName(nameBuffer);
-
-    setName(student , name , nameBuffer);
+    setName(student , name);
 
     noOfSubjects = inputNoOfSubjects();
 
@@ -26,10 +23,9 @@ void addStudent(Student *student){
 
     setTotalMarksOfEachSubject(student , totalMarksOfEachSubject);
 
-    marks = inputMarks(noOfSubjects , marksBuffer ,totalMarksOfEachSubject);
+    marks = inputMarks(noOfSubjects ,totalMarksOfEachSubject);
 
-    setMarks(student , marks , noOfSubjects ,marksBuffer);
-
+    setMarks(student , marks , noOfSubjects);
     obtainedMarks = calculateObtainedMarks(noOfSubjects , marks);
 
     setObtainedMarks(student , obtainedMarks);
@@ -41,6 +37,9 @@ void addStudent(Student *student){
     percentage = calculatePercentage(obtainedMarks , combinedTotalMarks);
 
     setPercentage(student , percentage);
+
+    free(name);
+    free(marks);
 
 }
 
@@ -81,7 +80,7 @@ cJSON *getStudentFromDatabase(FILE *fileptr){
     temp = readSpecificLineFromFile(fileptr , studentId , charBuffer);
 
     cJSON *json_obj = parseJSONObject( temp);
-
+    free(temp);
     return json_obj;
 }
 
@@ -124,11 +123,14 @@ cJSON ***getObjectItemsFromJSON(cJSON *json){
 
     }
 
+//    for (int i = 0; i < 3; i++) {
+//        free(items[i]);
+//    }
+//    free(items);
+
     return items;
 }
 cJSON printObject(cJSON ***items){
-
-
     char *name = items[0][1]->valuestring;
     int rollNo = items[0][0]->valueint;
     int noOfSubjects = items[0][2]->valueint;
@@ -142,47 +144,41 @@ cJSON printObject(cJSON ***items){
     }
 
     printStudent(rollNo,name,noOfSubjects,marks,obtainedMarks,totalMarks,percentage);
-    free(items);
 };
 
-int editMenu(cJSON ***items , cJSON *json_obj){
+int editMenu(FILE *fileptr,cJSON ***items , cJSON *json_obj){
 
-    int editMenuChoice = 0 , loopChoice = 0 , roll_no;
-    char *json_string;
+    int editMenuChoice = 0 , loopChoice = 0 ,rollNo = items[0][0]->valueint;
+    char *json_string ,*name;
+//    json_string = (char *) malloc(sizeof (char) * 50);
+
     do{
-
         system("cls");
         printObject(items);
-        printf("\n What do you want to edit\n2\tname\n3\tnoOfSubjects\n4\tmarks\n5\tobtainedMarks\n6\ttotalMarks\n7\tpercentage\n");
+        printf("\n What do you want to edit\n1\tname\n2\tnoOfSubjects\n3\tmarks\n");
         scanf("%d" , &editMenuChoice);
 
 
         switch (editMenuChoice) {
             case 1:
-
-                *json_string = modifyJSONNumberObject(json_obj , "roll_no" , roll_no);
-                printf("%s\n" , json_string);
+                name = inputName();
+                json_string = modifyJSONStringObject(json_obj , "name" , name);
+                printf("%s" , json_string);
+                addJSONToFile(fileptr , rollNo ,json_string);
+                free(json_string );
+                free(name);
                 break;
+
             case 2:
+
 
                 break;
             case 3:
 
                 break;
-            case 4:
-
-                break;
-            case 5:
-
-                break;
-            case 6:
-
-                break;
-            case 7:
-                break;
-
         }
         printf("\nPress 1 for continue editing:");
         scanf("%d" , &loopChoice);
+
     }while(loopChoice == 1);
 }
