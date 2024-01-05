@@ -12,12 +12,13 @@ int main(int argc, char *argv[]) {
 
 	do{
         FILE *fileptr;
+        char *database = "newDatabase.txt";
 		system("cls");
 		printf("\t\t\tStudent Management System\nEnter Your Selection\n1\tAdd New student\n2\tView A Student\n3\tEdit A Student\n4\tDelete A Student\n5\tExit\n");
 		scanf("%d" , &menuChoice);
 		switch(menuChoice){
 			case 1:{
-                fileptr = openOrCreateFileForWriting("newDatabase.txt");
+                fileptr = openOrCreateFileForWriting(database );
                 Student newStudent;
 				addStudent(&newStudent);
                 setRollNo(fileptr , &newStudent);
@@ -29,13 +30,19 @@ int main(int argc, char *argv[]) {
 			}
 
 			case 2:
-                fileptr = openFileForReading("newDatabase.txt");
-                viewStudent(fileptr);
+                fileptr = openFileForReading(database );
+                cJSON *json_obj = getStudentFromDatabase(fileptr);
+                cJSON ***itemsArray = getObjectItemsFromJSON(json_obj);
+                printObject(itemsArray);
                 closeFile(fileptr);
 				break;
 			case 3:
-				//
-				break;
+				fileptr = openOrCreateFileForWriting(database);
+                cJSON *json = getStudentFromDatabase(fileptr);
+                cJSON ***items = getObjectItemsFromJSON(json);
+                editMenu(items , json);
+                closeFile(fileptr);
+                break;
 			case 4:
 				//
 				break;

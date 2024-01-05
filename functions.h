@@ -2,6 +2,7 @@
 #define FUNCTIONS_H
 #include<stddef.h>
 #include<stdlib.h>
+#include"cJSON.h"
 
 //making student structure
 typedef struct{
@@ -24,5 +25,11 @@ void printStudent(int rollNo , char *name , int noOfSubjects , float *marks ,flo
 void freeMemory(Student *student);
 
 //viewstudent
-void viewStudent();
+cJSON * getStudentFromDatabase(FILE *fileptr);
+cJSON ***getObjectItemsFromJSON(cJSON *json_obj);
+cJSON printObject(cJSON ***items);
+
+
+
+int editMenu(cJSON ***items , cJSON *json_obj);
 #endif

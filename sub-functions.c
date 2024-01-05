@@ -4,93 +4,133 @@
 #include<stdlib.h>
 #include "cJSON.h" //https://github.com/DaveGamble/cJSON
 
-void inputName(Student *student, size_t nameBuffer){
-    printf("\nEnter Student's Name: ");
+
+
+char *inputName(size_t nameBuffer){
+    char *name;
+
+    name = (char*)malloc(nameBuffer);
+
+    if(name == NULL){
+        printf("MEMORY ALLOCATION FAILED\n");
+        exit(1);
+    }
+    printf("Enter the name of the student: ");
+    scanf("\n%[^\n]" ,name);
+
+    return name;
+}
+void setName(Student *student , char *name , size_t nameBuffer){
+
     student->name = malloc(nameBuffer);
-
     if(student->name == NULL){
-        printf("\nMEMORY ALLOCATION FAILED..EXITING\n");
+        printf("MEMORY ALLOCATION FAILED\n");
         exit(1);
     }
-    else{
-        scanf("\n%[^\n]" , student->name);
-        /*
-            we don't use & for student name because in C the arrays passed in the functions argument acts as
-            a pointer to the first elemtent by its own so no need to pass the address of the array;
-               and the format specifier means it will take everything as input in a single line
-            %[ is the begining of the input and ^\n tells it to negate the input if \n is encountered and ] closes the input
-        */
-    }
-}
-int inputNoOfSubjects(Student *student){
+    student->name = name;
 
-    printf("\nEnter the no of Subjects of student %s:",student->name);
-    scanf("%d" ,&student->noOfSubjects);
-
-    return student->noOfSubjects;
-};
-
-int inputTotalMarksofSubject(Student *student){
-
-    printf("\nEnter the total marks of the subjects:");
-    scanf("%f" ,&student->totalMarksOfEachSubject);
-
-    return student->totalMarksOfEachSubject;
 }
 
-void inputMarks(Student *student, size_t marksBuffer ){
-    float temp = 0;
-    student->marks = malloc(marksBuffer);
-    if(student->marks == NULL){
-        printf("\nMEMORY ALLOCATION FAILED..EXITING\n");
-        exit(1);
-    }
-    else{
-        for (int i = 0; i < student->noOfSubjects; i++) {
-            printf("Enter marks of Subject %d\n" , i + 1);
-            scanf("%f" , &temp);
+int inputNoOfSubjects(){
+    int noOfSubjects;
+    printf("\nEnter the no of Subjects: ");
+    scanf("%d" ,&noOfSubjects);
 
-            if(temp > student->totalMarksOfEachSubject){
-                printf("\nMarks input invalid....EXITING..\n");
-                exit(1);
-            }
-            else{
-                student->marks[i] = temp;
-            }
+    return noOfSubjects;
+}
+void setNoOfSubjects(Student *student,int noOfSubjects){
+    student->noOfSubjects = noOfSubjects;
+}
+
+float inputTotalMarksOfEachSubject(){
+    float totalMarksOfEachSubject;
+
+    printf("\nEnter the total marks of the subjects: ");
+    scanf("%f" ,&totalMarksOfEachSubject);
+
+    return totalMarksOfEachSubject;
+}
+void setTotalMarksOfEachSubject(Student *student ,float totalMarksOfEachSubject ){
+
+    student->totalMarksOfEachSubject = totalMarksOfEachSubject;
+
+}
+float *inputMarks(int noOfSubjects , size_t marksBuffer ,float totalMarksOfEachSubject){
+
+    float *marks , temp = 0;
+
+    marks =  malloc(marksBuffer);
+
+    for (int i = 0; i < noOfSubjects ; i++) {
+
+        printf("\nEnter marks of subject %d: " ,i + 1);
+        scanf("%f" ,&temp);
+
+        if(temp > totalMarksOfEachSubject){
+            printf("Entered marks greater than %f ",totalMarksOfEachSubject);
+            exit(1);
+        }
+        else{
+            marks[i] = temp;
         }
     }
+
+    return  marks;
+
 }
-float inputObtainedMarks(Student *student){
+void setMarks(Student *student , float *marks , int noOfSubjects , size_t numberBuffer){
 
-    float sum = 0;
-    for (int i = 0; i < student->noOfSubjects;i++) {
+    student->marks = (float * ) malloc(numberBuffer);
 
-        sum += student->marks[i];
+    for (int i = 0; i < noOfSubjects;i++) {
+
+    student->marks[i] = marks[i];
 
     }
-    student->obtainedMarks = sum;
+}
+float calculateObtainedMarks(int noOfSubjects , float *marks ){
 
+    float sum = 0;
+
+    for (int i = 0; i < noOfSubjects;i++) {
+
+        sum += marks[i];
+
+    }
     return sum;
 }
-int inputTotalMarksOfAllSubjects(Student *student){
+void setObtainedMarks(Student *student , float obtainedMarks){
 
-    student->combinedTotalMarks = student->noOfSubjects * student->totalMarksOfEachSubject;
-
-    return student->combinedTotalMarks;
+    student->obtainedMarks = obtainedMarks;
 
 }
-float inputPercentage(Student *student){
+int calculateCombinedTotalMarks(int noOfSubjects , float  totalMarksOfEachSubject){
 
-    student->percentage = (student->obtainedMarks/student->combinedTotalMarks) * 100;
+    return noOfSubjects * totalMarksOfEachSubject;
 
-    return student->percentage;
+}
+void setCombinedTotalMarks(Student *student , int combinedTotalMarks){
+
+    student->combinedTotalMarks = combinedTotalMarks;
+
 }
 
+float calculatePercentage(float obtainedMarks ,int  combinedTotalMarks){
+
+    return (obtainedMarks / combinedTotalMarks) * 100;
+
+}
+
+void setPercentage(Student *student , float percentage){
+
+    student->percentage = percentage;
+
+}
 
 int getStudentId(){
     int userId;
 
-    printf("\t\t\tView Student\nEnter the ID of the student you want to view\n");
+    printf("\nEnter the ID of the student\n");
 
     scanf("%d" , &userId);
 
@@ -110,65 +150,23 @@ cJSON *parseJSONObject(char *jsonString){
     return json_obj;
 }
 
-cJSON ***getObjectItemsFromJSON(cJSON *json){
-/*
- * the first star means a pointer to an array of pointers this is the whole array itself
- * second stars means a pointer to a pointer these are the elements of the outer array
- * third star is the pointer to a JSON object which are the elements of the inner array
- */
-    cJSON ***items;
-
-    items = malloc(sizeof (cJSON**) * 3);
-
-    for (int i = 0; i < 3; i++) {
-
-        items[i] = malloc(sizeof (cJSON*) * 3);
-
-    }
-
-    items[0][0] = cJSON_GetObjectItem(json , "roll_no");
-    items[0][1] = cJSON_GetObjectItem(json , "name");
-    items[0][2] = cJSON_GetObjectItem(json , "no_of_subjects");
-
-
-    items[2][0] = cJSON_GetObjectItem(json,"obtained_marks");
-    items[2][1] = cJSON_GetObjectItem(json,"total_marks");
-    items[2][2] = cJSON_GetObjectItem(json,"percentage");
-
-    int no_of_subjects = items[0][2]->valueint;
-
-    char tempString[no_of_subjects];
-
-    items[1] = malloc(sizeof (cJSON*) * no_of_subjects);
-
-    for (int i = 0; i < no_of_subjects; i++) {
-
-        sprintf(tempString , "subject_%d" , i + 1);
-
-        items[1][i] = cJSON_GetObjectItem(json , tempString);
-
-    }
-
-    return items;
+char modifyJSONStringObject(cJSON *json_obj , char *keyName , char *string ){
+    cJSON_ReplaceItemInObjectCaseSensitive(json_obj , keyName , cJSON_CreateString(string));
+    char *json_str = cJSON_Print(json_obj);
+    return *json_str;
 }
-cJSON printObject(cJSON ***items){
 
+char modifyJSONNumberObject(cJSON *json_obj , char *keyName ,int number ){
+    cJSON_ReplaceItemInObjectCaseSensitive(json_obj , keyName , cJSON_CreateNumber(number));
+    char *json_str = cJSON_Print(json_obj);
+    return *json_str;
+}
+//char modifyJSONFloatObject(cJSON *json_obj , char *keyName ,double number ){
+//    cJSON_ReplaceItemInObjectCaseSensitive(json_obj , keyName , cJSON_create(number));
+//    char *json_str = cJSON_Print(json_obj);
+//    return *json_str;
+//}/
 
-    char *name = items[0][1]->valuestring;
-    int rollNo = items[0][0]->valueint;
-    int noOfSubjects = items[0][2]->valueint;
-    int totalMarks = items[2][1]->valueint;
-    float obtainedMarks = items[2][0]->valuedouble;
-    float percentage = items[2][2]->valuedouble;
-    float marks[noOfSubjects];
-
-    for (int i = 0; i < noOfSubjects; i++) {
-        marks[i] = items[1][i]->valuedouble;
-    }
-
-    printStudent(rollNo,name,noOfSubjects,marks,obtainedMarks,totalMarks,percentage);
-    free(items);
-};
 
 
 //TODO:://free the allocated memory in the sub functions

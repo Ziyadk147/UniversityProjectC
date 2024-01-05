@@ -6,21 +6,32 @@
 #include "cJSON.h"
 #define C_SUB_FUNCTIONS_H
 
-void inputName(Student *student, size_t nameBuffer);
-void inputMarks(Student *student, size_t marksBuffer );
-void freeObjectMemory(cJSON ***items);
+char *inputName(size_t nameBuffer);
+void setName(Student *student,char *name , size_t nameBuffer);
+int inputNoOfSubjects();
+void setNoOfSubjects(Student *student , int noOfSubjects);
+float inputTotalMarksOfEachSubject();
+void setTotalMarksOfEachSubject(Student *student ,float totalMarksOfEachSubject);
+float *inputMarks(int noOfSubjects,size_t marksBuffer,float totalMarksOfEachSubject);
+void setMarks(Student *student , float *marks , int noOfSubjects,size_t numberBuffer);
+float calculateObtainedMarks(int noOfSubjects , float *marks);
+void setObtainedMarks(Student *student , float obtainedMarks);
+int calculateCombinedTotalMarks(int noOfSubjects , float  totalMarksOfEachSubject);
+void setCombinedTotalMarks(Student *student , int combinedTotalMarks);
+float calculatePercentage(float obtainedMarks, int  combinedTotalMarks);
+void setPercentage(Student *student , float percentage);
 
-int inputNoOfSubjects(Student *student);
-int inputTotalMarksofSubject(Student *student);
-int inputTotalMarksOfAllSubjects(Student *student);
+
 int getStudentId();
 
-float  inputObtainedMarks(Student *student);
-float inputPercentage(Student *student);
+
 
 cJSON *parseJSONObject(char *jsonString);
-cJSON ***getObjectItemsFromJSON(cJSON *json_obj);
 
 cJSON printObject(cJSON ***items);
+
+char modifyJSONStringObject(cJSON *json_obj , char *keyName , char *string );
+char modifyJSONNumberObject(cJSON *json_obj , char *keyName ,int number );
+char modifyJSONFloatObject(cJSON *json_obj , char *keyName ,double number );
 
 #endif //C_SUB_FUNCTIONS_H
