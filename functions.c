@@ -6,25 +6,42 @@
 
 void addStudent(Student *student){
 
-    size_t nameBuffer = 50 ,marksBuffer = sizeof(float);
+    size_t nameBuffer = 50 * sizeof (char), marksBuffer = sizeof(float);
+    char *name;
+    float totalMarksOfEachSubject = 0,obtainedMarks = 0 ,percentage,*marks;
+    int noOfSubjects = 0,combinedTotalMarks;
 
-    int noOfSubjects = 0;
 
     marksBuffer *= noOfSubjects; //BUFFER is set to the size of float times the total subjects,so that enough memory will be allocated
 
-    inputName(student , nameBuffer);
+    name = inputName(nameBuffer);
 
-    noOfSubjects = inputNoOfSubjects(student);
+    setName(student , name , nameBuffer);
 
-    inputTotalMarksofSubject(student);
+    noOfSubjects = inputNoOfSubjects();
 
-    inputMarks(student ,marksBuffer );
+    setNoOfSubjects(student,  noOfSubjects);
 
-    inputObtainedMarks(student);
+    totalMarksOfEachSubject = inputTotalMarksOfEachSubject();
 
-    inputTotalMarksOfAllSubjects(student);
+    setTotalMarksOfEachSubject(student , totalMarksOfEachSubject);
 
-    inputPercentage(student);
+    marks = inputMarks(noOfSubjects , marksBuffer ,totalMarksOfEachSubject);
+
+    setMarks(student , marks , noOfSubjects ,marksBuffer);
+
+    obtainedMarks = calculateObtainedMarks(noOfSubjects , marks);
+
+    setObtainedMarks(student , obtainedMarks);
+
+    combinedTotalMarks = calculateCombinedTotalMarks(noOfSubjects , totalMarksOfEachSubject);
+
+    setCombinedTotalMarks(student , combinedTotalMarks);
+
+    percentage = calculatePercentage(obtainedMarks , combinedTotalMarks);
+
+    setPercentage(student , percentage);
+
 }
 
 void setRollNo(FILE *fileptr , Student *student){
