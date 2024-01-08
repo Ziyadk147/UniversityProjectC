@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "functions.h"
+#include "sub-functions.h"
 #include "database_functions.h"
 #include <cJSON.h> //https://github.com/DaveGamble/cJSON
 
@@ -8,8 +9,7 @@
 
 int main(int argc, char *argv[]) {
 	int exitChoice,menuChoice;
-
-
+    cJSON *json_obj,***itemsArray;
 	do{
         FILE *fileptr;
         char *database = "newDatabase.txt";
@@ -31,13 +31,23 @@ int main(int argc, char *argv[]) {
 
 			case 2:
                 fileptr = openFileForReading(database );
-                cJSON *json_obj = getStudentFromDatabase(fileptr);
-                cJSON ***itemsArray = getObjectItemsFromJSON(json_obj);
+                json_obj = getStudentFromDatabase(fileptr , getStudentId());
+                itemsArray  = getObjectItemsFromJSON(json_obj);
                 printObject(itemsArray);
                 closeFile(fileptr);
 				break;
 			case 3:
+                fileptr = openFileForReading(database );
 
+//                    itemsArray = getObjectItemsFromJSON(json_obj);
+//                    printObject(itemsArray);
+
+                for (int i = 1; i <= 2; i++) {
+                    json_obj = getStudentFromDatabase(fileptr , i);
+
+                }
+
+                closeFile(fileptr);
                 break;
 			case 4:
 				//

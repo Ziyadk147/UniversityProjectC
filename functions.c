@@ -71,18 +71,18 @@ void freeMemory(Student *student){
 }
 
 
-cJSON *getStudentFromDatabase(FILE *fileptr){
-    int studentId;
-    char *temp;
+cJSON *getStudentFromDatabase(FILE *fileptr , int studentId){
 
-    size_t charBuffer = 256;
-    studentId = getStudentId();
+    char *temp = calloc(150 , sizeof (char ));
 
-    temp = readSpecificLineFromFile(fileptr , studentId , charBuffer);
 
-    cJSON *json_obj = parseJSONObject( temp);
+    *temp = readSpecificLineFromFile(fileptr , studentId );
+//    cJSON *json_obj = parseJSONObject( temp);
+    printf("%s" , temp);
 
-    return json_obj;
+
+
+//    return json_obj;
 }
 
 cJSON ***getObjectItemsFromJSON(cJSON *json){

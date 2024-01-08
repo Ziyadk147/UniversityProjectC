@@ -58,20 +58,29 @@ void addStudentToFile(FILE *fileptr, Student student){
 
 
 }
-char *readSpecificLineFromFile(FILE *fileptr , int lineNumber , size_t charBuffer){
-
-    char *tempLine , *jsonLine;
-
-
-    tempLine = malloc(charBuffer);
-
+char readSpecificLineFromFile(FILE *fileptr , int lineNumber ){
+    char *tempLine = NULL;
+    tempLine = calloc(150 , sizeof (char));
     int count = 1;
 
-    while(fgets(tempLine ,charBuffer ,fileptr) != NULL){
+    while(count <= lineNumber){
+
+        int i = 0;
+        while((tempLine[i] = fgetc(fileptr)) != EOF){
+            if(tempLine[i] == '\n'){
+                break;
+            }
+            i++;
+        }
+
         if(count == lineNumber){
-          return tempLine;
+            printf("%s" , tempLine);
+
         }
         count++;
-    };
-    fclose(fileptr);
+
+    }
+    free(tempLine);
+
+
 }

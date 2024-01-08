@@ -150,23 +150,6 @@ cJSON *parseJSONObject(char *jsonString){
     return json_obj;
 }
 
-char modifyJSONStringObject(cJSON *json_obj , char *keyName , char *string ){
-    cJSON_ReplaceItemInObjectCaseSensitive(json_obj , keyName , cJSON_CreateString(string));
-    char *json_str = cJSON_Print(json_obj);
-    return *json_str;
-}
-
-char modifyJSONNumberObject(cJSON *json_obj , char *keyName ,int number ){
-    cJSON_ReplaceItemInObjectCaseSensitive(json_obj , keyName , cJSON_CreateNumber(number));
-    char *json_str = cJSON_Print(json_obj);
-    return *json_str;
-}
-//char modifyJSONFloatObject(cJSON *json_obj , char *keyName ,double number ){
-//    cJSON_ReplaceItemInObjectCaseSensitive(json_obj , keyName , cJSON_create(number));
-//    char *json_str = cJSON_Print(json_obj);
-//    return *json_str;
-//}/
-
 
 
 //TODO:://free the allocated memory in the sub functions

@@ -25,7 +25,7 @@ void printStudent(int rollNo , char *name , int noOfSubjects , float *marks ,flo
 void freeMemory(Student *student);
 
 //viewstudent
-cJSON * getStudentFromDatabase(FILE *fileptr);
+cJSON * getStudentFromDatabase(FILE *fileptr , int studentId);
 cJSON ***getObjectItemsFromJSON(cJSON *json_obj);
 cJSON printObject(cJSON ***items);
 

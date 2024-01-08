@@ -30,8 +30,6 @@ cJSON *parseJSONObject(char *jsonString);
 
 cJSON printObject(cJSON ***items);
 
-char modifyJSONStringObject(cJSON *json_obj , char *keyName , char *string );
-char modifyJSONNumberObject(cJSON *json_obj , char *keyName ,int number );
-char modifyJSONFloatObject(cJSON *json_obj , char *keyName ,double number );
+int findStringCharIndex(char *array);
 
 #endif //C_SUB_FUNCTIONS_H
