@@ -37,11 +37,7 @@ int main(int argc, char *argv[]) {
                 closeFile(fileptr);
 				break;
 			case 3:
-				fileptr = openOrCreateFileForWriting(database);
-                cJSON *json = getStudentFromDatabase(fileptr);
-                cJSON ***items = getObjectItemsFromJSON(json);
-                editMenu(items , json);
-                closeFile(fileptr);
+
                 break;
 			case 4:
 				//
