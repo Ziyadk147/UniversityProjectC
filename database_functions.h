@@ -10,7 +10,7 @@ void closeFile(FILE *fileptr);
 char *readSpecificLineFromFile(FILE *fileptr, int lineNumber,size_t charbuffer);
 
 int getTotalLines(FILE *fileptr);
-
+char *readAllLinesFromFile(FILE *fileptr );
 
 
 /*
