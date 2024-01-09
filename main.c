@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
         FILE *fileptr;
         char *database = "newDatabase.txt";
 		system("cls");
-		printf("\t\t\tStudent Management System\nEnter Your Selection\n1\tAdd New student\n2\tView A Student\n3\tEdit A Student\n4\tDelete A Student\n5\tExit\n");
+		printf("\t\t\tStudent Management System\nEnter Your Selection\n1\tAdd New student\n2\tView A Student\n3\tView All Students\n4\tExit\n");
 		scanf("%d" , &menuChoice);
 		switch(menuChoice){
 			case 1:{
@@ -32,19 +32,24 @@ int main(int argc, char *argv[]) {
 			case 2:
                 fileptr = openFileForReading(database );
                 cJSON *json_obj = getStudentFromDatabase(fileptr);
+//                printf("%s" , cJSON_Print(json_obj));
+/*
+ *      The printing could have already been done in the JSON formatted by the above commented file
+ *      i implemented the printing function for the sake of the requirement of 2d arrays :);
+ *
+ * */
                 cJSON ***itemsArray = getObjectItemsFromJSON(json_obj);
                 printObject(itemsArray);
                 closeFile(fileptr);
 				break;
 			case 3:
-
+                fileptr = openFileForReading(database);
+                readAllLinesFromFile(fileptr);
+                closeFile(fileptr);
                 break;
 			case 4:
-				//
-				break;
-			case 5:
-				exit(0);
-				break;
+                exit(0);
+                break;
 			default:
 				printf("Enter a valid Choice\n");
 				break;	

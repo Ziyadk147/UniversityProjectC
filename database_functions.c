@@ -60,8 +60,8 @@ void addStudentToFile(FILE *fileptr, Student student){
 }
 char *readSpecificLineFromFile(FILE *fileptr , int lineNumber , size_t charBuffer){
 
-    char *tempLine , *jsonLine;
-
+    char *tempLine;
+    cJSON *json_obj;
 
     tempLine = malloc(charBuffer);
 
@@ -69,9 +69,29 @@ char *readSpecificLineFromFile(FILE *fileptr , int lineNumber , size_t charBuffe
 
     while(fgets(tempLine ,charBuffer ,fileptr) != NULL){
         if(count == lineNumber){
-          return tempLine;
+            return tempLine;
+//            json_obj = cJSON_Parse(tempLine);
+//            printf("%s" , cJSON_Print(json_obj));
         }
         count++;
     };
     fclose(fileptr);
+
 }
+
+char *readAllLinesFromFile(FILE *fileptr ){
+    char *templine;
+    cJSON *json_object ;
+    int buffer = 10000;
+    templine = (char *)malloc( buffer * sizeof (char*));
+
+    while(fgets(templine , buffer , fileptr ) != NULL){
+        json_object = cJSON_Parse(templine);
+        printf("%s" , cJSON_Print(json_object));
+    }; //reads until it encouters null;
+    free(templine);
+    free(json_object);
+
+
+
+};
