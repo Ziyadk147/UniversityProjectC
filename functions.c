@@ -41,14 +41,13 @@ void addStudent(Student *student){
     percentage = calculatePercentage(obtainedMarks , combinedTotalMarks);
 
     setPercentage(student , percentage);
-
+    free(name);
+    free(marks);
 }
 
 void setRollNo(FILE *fileptr , Student *student){
 
-    int currentLine = getTotalLines(fileptr);
-
-    student->roll_no = currentLine + 1;
+   student->roll_no = rand(); //will generate random number
 
 }
 
@@ -81,7 +80,7 @@ cJSON *getStudentFromDatabase(FILE *fileptr){
     temp = readSpecificLineFromFile(fileptr , studentId , charBuffer);
 
     cJSON *json_obj = parseJSONObject( temp);
-
+    free(temp);
     return json_obj;
 }
 
