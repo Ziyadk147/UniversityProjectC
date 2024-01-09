@@ -7,7 +7,7 @@ FILE *openFileForReading(char *filename);
 void addStudentToFile(FILE *fileptr , Student student);
 void closeFile(FILE *fileptr);
 
-char *readSpecificLineFromFile(FILE *fileptr, int lineNumber,size_t charbuffer);
+char *readSpecificLineFromFile(FILE *fileptr, int studentId,size_t charbuffer);
 
 int getTotalLines(FILE *fileptr);
 char *readAllLinesFromFile(FILE *fileptr );

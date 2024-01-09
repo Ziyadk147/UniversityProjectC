@@ -58,23 +58,26 @@ void addStudentToFile(FILE *fileptr, Student student){
 
 
 }
-char *readSpecificLineFromFile(FILE *fileptr , int lineNumber , size_t charBuffer){
+char *readSpecificLineFromFile(FILE *fileptr , int studentId , size_t charBuffer){
 
     char *tempLine;
-    cJSON *json_obj;
-
+    cJSON *json_obj , rollNumber;
     tempLine = malloc(charBuffer);
 
     int count = 1;
 
+
     while(fgets(tempLine ,charBuffer ,fileptr) != NULL){
-        if(count == lineNumber){
+        json_obj = cJSON_Parse(tempLine);
+        rollNumber = *cJSON_GetObjectItem(json_obj , "roll_no");
+
+        if(rollNumber.valueint == studentId){
             return tempLine;
-//            json_obj = cJSON_Parse(tempLine);
-//            printf("%s" , cJSON_Print(json_obj));
+
         }
-        count++;
+
     };
+    free(json_obj);
     fclose(fileptr);
 
 }
