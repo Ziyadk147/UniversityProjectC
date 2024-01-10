@@ -41,8 +41,6 @@ void addStudent(Student *student){
     percentage = calculatePercentage(obtainedMarks , combinedTotalMarks);
 
     setPercentage(student , percentage);
-    free(name);
-    free(marks);
 }
 
 void setRollNo(FILE *fileptr , Student *student){
