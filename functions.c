@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 #include "functions.h"
 #include "sub-functions.h"
 #include "database_functions.h"
@@ -41,15 +42,16 @@ void addStudent(Student *student){
     percentage = calculatePercentage(obtainedMarks , combinedTotalMarks);
 
     setPercentage(student , percentage);
-    free(name);
-    free(marks);
 }
 
 void setRollNo(FILE *fileptr , Student *student){
 
-   student->roll_no = rand(); //will generate random number
+    time_t currentTime;
+    srand((unsigned ) time(&currentTime));
+    student->roll_no = rand(); //will generate random number
 
 }
+
 
 void printStudent(int rollNo , char *name , int noOfSubjects , float *marks ,float obtainedMarks ,int combinedTotalMarks,float percentage){
 	printf("Roll number of student is %d\nName of Student is %s\n" , rollNo,name);
@@ -79,9 +81,13 @@ cJSON *getStudentFromDatabase(FILE *fileptr){
 
     temp = readSpecificLineFromFile(fileptr , studentId , charBuffer);
 
-    cJSON *json_obj = parseJSONObject( temp);
-    free(temp);
-    return json_obj;
+    if(temp == NULL){
+
+        printf("\nStudent for id %d not found in database\nExiting..." , studentId);
+        exit(1);
+
+    }
+    return temp;
 }
 
 cJSON ***getObjectItemsFromJSON(cJSON *json){
