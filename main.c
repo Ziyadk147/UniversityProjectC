@@ -27,11 +27,13 @@ int main(int argc, char *argv[]) {
                 printStudent(newStudent.roll_no,newStudent.name,newStudent.noOfSubjects,newStudent.marks,newStudent.obtainedMarks,newStudent.combinedTotalMarks,newStudent.percentage);
                 freeMemory(&newStudent);
                 break;
+
 			}
 
 			case 2:
                 fileptr = openFileForReading(database );
                 cJSON *json_obj = getStudentFromDatabase(fileptr);
+                json_obj = cJSON_Parse(json_obj);
 //                printf("%s" , cJSON_Print(json_obj));
 /*
  *      The printing could have already been done in the JSON formatted by the above commented file
@@ -39,6 +41,7 @@ int main(int argc, char *argv[]) {
  *
  * */
                 cJSON ***itemsArray = getObjectItemsFromJSON(json_obj);
+                free(json_obj);
                 printObject(itemsArray);
                 closeFile(fileptr);
 				break;

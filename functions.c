@@ -77,9 +77,13 @@ cJSON *getStudentFromDatabase(FILE *fileptr){
 
     temp = readSpecificLineFromFile(fileptr , studentId , charBuffer);
 
-    cJSON *json_obj = parseJSONObject( temp);
-    free(temp);
-    return json_obj;
+    if(temp == NULL){
+
+        printf("\nStudent for id %d not found in database\nExiting..." , studentId);
+        exit(1);
+
+    }
+    return temp;
 }
 
 cJSON ***getObjectItemsFromJSON(cJSON *json){
