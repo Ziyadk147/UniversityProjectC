@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 #include "functions.h"
 #include "sub-functions.h"
 #include "database_functions.h"
@@ -45,9 +46,12 @@ void addStudent(Student *student){
 
 void setRollNo(FILE *fileptr , Student *student){
 
-   student->roll_no = rand(); //will generate random number
+    time_t currentTime;
+    srand((unsigned ) time(&currentTime));
+    student->roll_no = rand(); //will generate random number
 
 }
+
 
 void printStudent(int rollNo , char *name , int noOfSubjects , float *marks ,float obtainedMarks ,int combinedTotalMarks,float percentage){
 	printf("Roll number of student is %d\nName of Student is %s\n" , rollNo,name);
